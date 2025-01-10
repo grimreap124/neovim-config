@@ -6,13 +6,17 @@
 
   outputs = {nixpkgs, ...} @ inputs: {
     packages."x86_64-linux" = let
-      maximalConfig = import ./configuration.nix true;
-      neovimConfigured = inputs.nvf.lib.neovimConfiguration {
-        inherit (nixpkgs.legacyPackages."x86_64-linux") pkgs;
-        modules = [maximalConfig];
-      };
+      mkConfig = config:
+        inputs.nvf.lib.neovimConfiguration {
+          inherit (nixpkgs.legacyPackages."x86_64-linux") pkgs;
+          modules = [config];
+        };
+
+      maximalConfig = mkConfig (import ./configuration.nix true);
+      minimalConfig = mkConfig (import ./configuration.nix false);
     in {
-      default = neovimConfigured.neovim;
+      default = maximalConfig.neovim;
+      minimal = minimalConfig.neovim;
     };
   };
 }
