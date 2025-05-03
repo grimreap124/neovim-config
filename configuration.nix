@@ -2,6 +2,7 @@ maximal: {
   config.vim = {
     viAlias = true;
     vimAlias = true;
+    lineNumberMode = "number"
 
     lsp = {
       formatOnSave = maximal;
