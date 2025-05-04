@@ -26,5 +26,7 @@
           minimal = minimalConfig.neovim;
         };
       }
-    );
+    ){
+      homeManagerModules.default = import ./home-module.nix;
+    };
 }
